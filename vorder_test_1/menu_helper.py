@@ -6,6 +6,7 @@ from pytesseract import Output
 from PIL import Image
 import cv2
 
+pytesseract.pytesseract.tesseract_cmd ='C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 
 ######
 ### TODO 
@@ -18,8 +19,8 @@ import cv2
 #Returns a Tuple of ranges mapped to a String
 def parseMenu():
 	menuMap = {}
-	img = cv2.imread("/Users/cairashields/Downloads/PyGaze-master/examples/vorder_test_1/test_menu_images/test_menu_2.jpeg")
-	data = pytesseract.image_to_data(img, config='--psm 12', output_type=Output.DICT)
+	#img = cv2.imread("./documents/vorder/vorder_test_1/test_menu_images/test_menu_2.jpeg")
+	data = pytesseract.image_to_data("./documents/vorder/vorder_test_1/test_menu_images/test_menu_2.jpeg", config='--psm 12', output_type=Output.DICT)
 	
 	n_boxes = len(data['level'])
 	
