@@ -15,11 +15,12 @@ from pygaze import eyetracker
 
 from pynput import mouse
 
+#pytesseract.pytesseract.tesseract_cmd ='C:\\Program Files (x86)\\Tesseract-OCR\\tessdata'
 
 menuMap = parseMenu()
 
 # create display object
-disp = libscreen.Display(disptype='psychopy', dispsize=(900,600)) 
+disp = libscreen.Display(disptype='psychopy', dispsize=(1200,800)) 
 
 # create eyetracker object
 tracker = eyetracker.EyeTracker(disp)
@@ -28,10 +29,9 @@ tracker = eyetracker.EyeTracker(disp)
 log = liblog.Logfile()
 
 # create screens
-mainScreen = libscreen.Screen(fgc=(0, 191, 255), dispsize=(900,600))
-mainScreen.draw_rect(colour=(0, 191, 255))
+mainScreen = libscreen.Screen(dispsize=(1200,800))
 #mainScreen.draw_text(text="When you see a cross, look at it and press space. Then make an eye movement to the black circle when it appears.\n\n(press space to start)", fontsize=24)
-mainScreen.draw_image(image="/Users/cairashields/Downloads/PyGaze-master/examples/vorder_test_1/test_menu_images/menu_image.png")
+mainScreen.draw_image(image="./documents/vorder/vorder_test_1/test_menu_images/test_menu_2.jpeg")
 
 #stores the amount of blinks that fall within a microsecond apart
 blinkCount = 0
@@ -44,22 +44,27 @@ blinkCount = 0
 tracker.calibrate()
 print(tracker.connected())
 
-def on_click(x, y, button, pressed):
-	print("Mouse clicked")
-	print("Food item found: %s" %(x))
-	print(tracker.sample())
-	#print("gazePosition_X: %s and gazePosition_Y: %s" %(tracker.sample()[0], tracker.sample()[1]))
-	#findFood(45, 300)
-
+#print("gazePosition_X: %s and gazePosition_Y: %s" %(tracker.sample()[0], tracker.sample()[1]))
 
 # Should return the closest item on the menu to where the customers current gave it
 def findClosestItem(x, y):
+	print(tracker.sample())
 	for key in menuMap:
 		itemDict = menuMap[key]
 		if ((itemDict[0][0] < x and itemDict[0][1] > x) and (itemDict[1][0] < y and itemDict[1][1] > y)):
 			return key
 
-print(findClosestItem(48, 73))
+#Some menu items come back incorrectly formatted 
+def repairMenuItemString(item):
+	print(item)
+	slashPosition = item.find("\\")
+	if (slashPosition != -1):
+		#remove the backslash and return new repaired string
+		return item[slashPosition:] 
+	else:
+		return item	
+
+print(repairMenuItemString(findClosestItem(48, 73)))
 
 
 
@@ -68,31 +73,24 @@ while True:
 	disp.fill(mainScreen)
 	disp.show()
 
-
-	time, startpos = tracker.wait_for_fixation_end()
-	print(startpos)
-	findFood(startpos[0], startpos[1])
-
-	with mouse.Listener(on_click=on_click) as listener:
-    		listener.join()
+	#TODO - detect blinks 
 
 
 
-# # region helper functions 
-# def breakDownDisplay():
-#   print("Closing everything down...")
-#   # end the experiment
-#   log.close()
-# 	disp.fill(screen = mainScreen)
-# 	disp.show()
-# 	#print tracker.sample()
-#   tracker.close()
-#   disp.close()
-#   libtime.expend()
+# region helper functions 
+def breakDownDisplay():
+	print("Closing everything down...")
+  	# end the experiment
+  	log.close()
+	disp.fill(screen = mainScreen)
+	disp.show()
+	#print tracker.sample()
+  	tracker.close()
+  	disp.close()
+  	libtime.expend()
 
 # def prinPos():
 #   threading.Timer(5.0, prinPos).start()
-#   print "Hello"
 #   print tracker.sample()
 
 
