@@ -36,9 +36,6 @@ mainScreen.draw_image(image="./documents/vorder/vorder_test_1/test_menu_images/t
 #stores the amount of blinks that fall within a microsecond apart
 blinkCount = 0
 
-#Menu Coordinate values 
-#findFood(45, 300)
-
 
 # calibrate eye tracker
 tracker.calibrate()
