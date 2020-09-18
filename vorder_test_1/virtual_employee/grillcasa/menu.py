@@ -23,50 +23,27 @@ def findProperBaseItem(customerResponse):
 	foundItem = False
 	wantedItem = False
 
-
+	matches = 0
 	
 	for menuItem in getAllMenuItems():
-		matches = 0
-		print(menuItem.split(" "))
 		for menuItemWord in menuItem.split(" "):
 			for word in response:
 				print(word)
 				sq = SequenceMatcher(None, word, menuItemWord)
-				print(sq.ratio())
+				#print '%-7s %-10s %f' % (word,menuItemWord,sq.ratio())	
 				
 				if(word == menuItemWord or sq.ratio() > .8):
 					print("same word or match")
+					matches += 1
+					wantedItem = menuItem
+					if (matches == len(menuItem.split(" "))):
+						print("FOUND SOMETHING")
+						print(wantedItem)
+						return wantedItem		
 				else:
 					print("not same")
-
-         		# print '%-7s %-10s %f' % (word,menuItemWord,sq.ratio())
-
-	# for wordInCustomerResponse in splitSentence:
-	# 	#print(menuItem)
-	# 	#search the user sentence for the current menuItem (must contain all menu item text)
-	
-	# 	for menuItem in getAllMenuItems():
-	# 		splitMenuItem = menuItem.split(" ")
-	# 		if (foundItem == False):
-	# 			for splitItem in splitMenuItem:
-	# 				print(splitItem)
-	# 				print(wordInCustomerResponse)
-	# 				sq.set_seqs(splitItem,wordInCustomerResponse)
- #        			print '%-7s %-10s %f' % (splitItem,wordInCustomerResponse,sq.ratio())
-
- #        			if (splitItem is wordInCustomerResponse or sq.ratio() > .8):
- #        				#accurate match
- #        				print("match")
- #        				foundItem = True
- #        				wantedItem = menuItem
- #        			else:
- #        				foundItem = False	
- #        				wantedItem = False
- #        	else:
- #        		print(foundItem)
- #        		return wantedItem			
-
-		#print(foundItem)		
+					#matches = 0
+					wantedItem = False		
 
 
 
@@ -80,4 +57,4 @@ def getAllMenuItems():
 	}
 
 
-findProperBaseItem("hey can i have a ten piece chicken nugget?")
+findProperBaseItem("hey can i have an french fries")
