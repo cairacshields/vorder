@@ -20,9 +20,7 @@ def findProperBaseItem(customerResponse):
 	sq = SequenceMatcher(None)
 	response = customerResponse.split(" ")
 	
-	foundItem = False
 	wantedItem = False
-
 	matches = 0
 	
 	for menuItem in getAllMenuItems():
@@ -32,8 +30,8 @@ def findProperBaseItem(customerResponse):
 				sq = SequenceMatcher(None, word, menuItemWord)
 				#print '%-7s %-10s %f' % (word,menuItemWord,sq.ratio())	
 				
-				if(word == menuItemWord or sq.ratio() > .8):
-					print("same word or match")
+				if(word is menuItemWord or sq.ratio() > .8):
+					print("same word or good enough match")
 					matches += 1
 					wantedItem = menuItem
 					if (matches == len(menuItem.split(" "))):
@@ -42,7 +40,6 @@ def findProperBaseItem(customerResponse):
 						return wantedItem		
 				else:
 					print("not same")
-					#matches = 0
 					wantedItem = False		
 
 
@@ -54,7 +51,29 @@ def getAllMenuItems():
 		"fries": {"hasCustomizations": True, "price": 1.99, "foodChain": "grillcasa"},
 		"apple pie": {"hasCustomizations": False, "price": 0.99, "foodChain": "grillcasa"},
 		"chicken nuggets": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Quarter Pounder with Cheese": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Sausage Burrito": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Mocha Frappe": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Double Quarter Pounder with Cheese": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Big Mac": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Quarter Pounder with Cheese Bacon": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"The Travis Scott": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"McDouble": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Hamburger": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Buttermilk Crispy Chicken Sandwich Meal": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"10 piece Chicken McNuggets Meal": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Double Quarter Pounder with Cheese Meal": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Filet Fish Meal": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Bacon Egg and Cheese McGriddles Meal": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Sausage Burrito Meal": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Hot Caramel Sundae": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Hot Fudge Sundae": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Chocolate Chip Cookie": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Apple Slices": {"hasCustomizations": False, "price": 0.0, "foodChain": "grillcasa"},
+		"Hamburger Happy Meal": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Fanta Orange": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
+		"Vanilla Shake": {"hasCustomizations": True, "price": 0.0, "foodChain": "grillcasa"},
 	}
 
 
-findProperBaseItem("hey can i have an french fries")
+findProperBaseItem("hey can i have an Hamburger Happy Meal")
