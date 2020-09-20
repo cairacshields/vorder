@@ -49,12 +49,13 @@ order = {}
 #represents if we're currently working on adding an item to order 
 currentlyBuilding = False 
 #the current item we're adding to order 
-currentItem = ''
+currentItem = None
 #The number of the current items to add to the order (i.e: how many of those cheeseburgers to add)
 	# This will change with each item we add to the order
 numOfItemsToAdd = 1
 
 def beginOrder(isRepeatRequest):
+	currentlyBuilding = True
 	#initiate automated greeting
 	if (isRepeatRequest):
 		engine.say("I'm sorry, please repeat that.")
@@ -73,7 +74,15 @@ def beginOrder(isRepeatRequest):
 		#if response is not an empty string, we should send it off to the nlp land
 
 		#then pass it off to actually find the item of interest
-		menu.findProperBaseItem(response)
+		menuItem = menu.findProperBaseItem(response)
+
+		if (menuItem != None):
+			#determine if we need customizations or not 
+			hasCustomizations = menu.itemHasCustomizations(menuItem)	
+			if (hasCustomizations):
+				#Begin the appropriate customization flow
+			else:
+				#Simply add item to the order	
 
 
 
